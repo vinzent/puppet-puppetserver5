@@ -6,8 +6,6 @@ describe 'puppetserver5 with some tuning' do
       class { 'puppetserver5':
         init_java_args     => '-Xmx512m -Xms512m -XX:+UseG1GC -XX:ReservedCodeCacheSize=512m -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger',
         init_jruby_jar     => '/opt/puppetlabs/server/apps/puppetserver/jruby-9k.jar',
-        # todo: can only be disabled when there are existing certs
-        # service_ca_disable => true,
         auth_allow_header_cert_info => true,
         jruby_puppet_max_active_instances => 1,
         jruby_puppet_max_requests_per_instance => 100,

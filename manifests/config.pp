@@ -29,15 +29,15 @@ class puppetserver5::config(
 
   if $service_ca_disable !~ Undef {
     $ca_service_content = $service_ca_disable ? {
-      true => 'puppetlabs.services.ca.certificate-authority-disabled-service/certificate-authority-disabled-service',
+      true    => 'puppetlabs.services.ca.certificate-authority-disabled-service/certificate-authority-disabled-service',
       default => 'puppetlabs.services.ca.certificate-authority-service/certificate-authority-service',
     }
 
-    file { $service_ca_cfg_path:
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      content => "# Managed by puppet\n${ca_service_content}\n",
+    file_line { "${service_ca_cfg_path} ca-service":
+      ensure => 'present',
+      path   => $service_ca_cfg_path,
+      line   => $ca_service_content,
+      match  => '^puppetlabs.services.ca.certificate-authority-.*',
     }
   }
 }

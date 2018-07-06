@@ -45,7 +45,13 @@ describe 'puppetserver5::config' do
       )
     }
 
-    it { is_expected.to contain_file('/etc/puppetlabs/puppetserver/services.d/ca.cfg') }
+    it {
+      is_expected.to contain_file_line('/etc/puppetlabs/puppetserver/services.d/ca.cfg ca-service').with(
+        'ensure' => 'present',
+        'path'   => '/etc/puppetlabs/puppetserver/services.d/ca.cfg',
+        'line'   => 'puppetlabs.services.ca.certificate-authority-disabled-service/certificate-authority-disabled-service',
+      )
+    }
   end
 
   context 'params set to ABSENT where possible' do
