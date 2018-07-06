@@ -11,9 +11,10 @@ describe 'puppetserver5::service::reload' do
 
   it {
     is_expected.to contain_exec('puppetserver5::service::reload').with(
-      'command' => '/usr/bin/pkill -HUP -f puppet-server',
-      'onlyif' => '/usr/bin/pgrep -f puppet-server',
+      'command' => '/opt/puppetlabs/server/apps/puppetserver/bin/puppetserver reload',
+      'onlyif' => '/usr/bin/pgrep -f "puppet-server-release.jar.* -m puppetlabs.trapperkeeper.main"',
       'refreshonly' => true,
+      'user' => 'puppet',
     )
   }
 end
