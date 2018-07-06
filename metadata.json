@@ -1,6 +1,6 @@
 {
   "name": "vinzent-puppetserver5",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "vinzent",
   "summary": "Install and configure puppetserver 5.x",
   "license": "Apache-2.0",
