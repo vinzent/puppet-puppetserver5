@@ -3,6 +3,10 @@
 
 Install & configure puppetserver 5.
 
+This module really only manages what puppetserver package provides. All
+other things should be done at the profile level (if using the
+roles/profiles pattern).
+
 ## Setup
 
 ### Setup Requirements
@@ -22,14 +26,14 @@ be removed.
 
 Simple example:
 
-```
+```puppet
 include puppetserver5
 
 ```
 
 Complex example:
 
-```
+```puppet
 class { 'puppetserver5':
   init_java_args     => '-Xmx8g -Xms8g -XX:+UseG1GC -XX:ReservedCodeCacheSize=512m -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger',
   init_jruby_jar                         => '/opt/puppetlabs/server/apps/puppetserver/jruby-9k.jar',
@@ -43,6 +47,18 @@ class { 'puppetserver5':
   webserver_ssl_port                     => 'ABSENT',
   product_check_for_updates              => false,
 }
+```
 
+If you wan't to manage auth.conf rules with [puppetlabs/puppet_authorization](https://forge.puppet.com/puppetlabs/puppet_authorization)
+you'll need to ensure it only gets manage after the package is installed and that it sends
+a notify to the service reload class.
+
+```puppet
+Class['puppetserver5::install']
+
+-> puppet_authorization { 'xyz': ... }
+
+~> Class['puppetserver5::service::reload']
+```
 
 See [REFERENCE.md](REFERENCE.md) for the puppet strings generated documentation.
